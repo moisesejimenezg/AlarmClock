@@ -4,7 +4,6 @@
 
 // classes
 #include "classes/Menu.h"
-#include "classes/Alarm.h"
 
 // TIME VARIABLES
 struct AlarmTime_st currentAlarm;
