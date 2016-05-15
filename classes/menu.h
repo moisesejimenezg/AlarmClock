@@ -20,6 +20,7 @@ typedef enum states_t {
     ALARM_STATE,
     ALARM_HOURS_STATE,
     ALARM_MINUTES_STATE,
+    ALARM_SETTING_STATE,
     FREQUENCY_STATE
 } states_t;
 
@@ -44,6 +45,8 @@ typedef struct MenuStruct {
 
     void (*handleAlarmMinutesState)(MenuStruct *self, int *buttonValues);
 
+    void (*handleAlarmSettingState)(MenuStruct *self, int *buttonValues);
+
     void (*handleFrequencyState)(MenuStruct *self, int *buttonValues);
 } MenuStruct;
 
@@ -64,6 +67,8 @@ void handleAlarmState(MenuStruct *self, int *buttonValues);
 void handleAlarmHoursState(MenuStruct *self, int *buttonValues);
 
 void handleAlarmMinutesState(MenuStruct *self, int *buttonValues);
+
+void handleAlarmSettingState(MenuStruct *self, int *buttonValues);
 
 void handleFrequencyState(MenuStruct *self, int *buttonValues);
 
