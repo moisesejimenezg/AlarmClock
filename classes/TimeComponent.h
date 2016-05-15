@@ -1,6 +1,7 @@
 //
 // Created by Moises Jimenez on 14.05.2016.
 //
+#include <stdlib.h>
 
 #ifndef ALARMCLOCK_TIMEOPERATIONS_H
 #define ALARMCLOCK_TIMEOPERATIONS_H

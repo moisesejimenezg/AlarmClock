@@ -3,7 +3,6 @@
 //
 
 #include "TimeComponent.h"
-#include <stdlib.h>
 
 TimeStruct *constructTimeStruct(int day, int hour, int minute) {
     TimeStruct *timeStruct = (TimeStruct *) malloc(sizeof(TimeStruct));
@@ -15,20 +14,21 @@ TimeStruct *constructTimeStruct(int day, int hour, int minute) {
     timeStruct->decreaseHour = decreaseHour;
     timeStruct->increaseMinute = increaseMinute;
     timeStruct->decreaseMinute = decreaseMinute;
+    return timeStruct;
 }
 
 void increaseHour(TimeStruct *self) {
-    self->hour++;
+    self->hour = (self->hour + 1) % 24;
 }
 
 void decreaseHour(TimeStruct *self) {
-    self->hour--;
+    self->hour = (self->hour - 1) % 24;
 }
 
 void increaseMinute(TimeStruct *self) {
-    self->minute++;
+    self->minute = (self->minute + 1) % 60;
 }
 
 void decreaseMinute(TimeStruct *self) {
-    self->minute--;
+    self->minute = (self->minute - 1) % 60;
 }
