@@ -1,6 +1,5 @@
 // Libraries
 #include <LiquidCrystal.h>
-#include "lib/time/Time.h"
 
 // classes
 #include "classes/Menu.h"
@@ -12,21 +11,25 @@ const int moreButton = 24;
 const int exitButton = 25;
 int buttonValues[4];
 
+// LOGIC
+MenuStruct *menuStruct;
+
+void readButtons();
+
 void setup() {
+    // HARDWARE INITS
     pinMode(enterButton, INPUT);
     pinMode(lessButton, INPUT);
     pinMode(moreButton, INPUT);
     pinMode(exitButton, INPUT);
+
+    // LOGIC INITS
+    menuStruct = constructMenuStruct();
 }
 
 void loop() {
     readButtons();
-    handleButtons();
-}
-
-void handleButtons() {
-
-
+    menuStruct->handleButtons(menuStruct, buttonValues);
 }
 
 void readButtons() {
