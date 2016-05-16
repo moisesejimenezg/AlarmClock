@@ -132,4 +132,13 @@ void handleAlarmSettingState(MenuStruct *self, int *buttonValues) {
     }
 }
 
-void handleFrequencyState(MenuStruct *self, int *buttonValues) { }
+void handleFrequencyState(MenuStruct *self, int *buttonValues) {
+    //TODO: implement frequency state machine
+    if (buttonValues[MENU_BUTTON]) {
+        self->state = FREQUENCY_STATE;
+    } else if (buttonValues[LESS_BUTTON]) {
+        self->state = ALARM_STATE;
+    } else if (buttonValues[MORE_BUTTON]) {
+        self->state = TIME_STATE;
+    }
+}
