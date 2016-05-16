@@ -29,7 +29,7 @@ typedef struct MenuStruct {
 
     states_t state;
 
-    void (*handleButtons)(MenuStruct *self, int *buttonValues);
+    states_t (*handleButtons)(MenuStruct *self, int *buttonValues);
 
     void (*handleIdleState)(MenuStruct *self, int *buttonValues);
 
@@ -52,7 +52,7 @@ typedef struct MenuStruct {
 
 MenuStruct *constructMenuStruct();
 
-void handleButtons(MenuStruct *self, int *buttonValues);
+states_t handleButtons(MenuStruct *self, int *buttonValues);
 
 void handleIdleState(MenuStruct *self, int *buttonValues);
 

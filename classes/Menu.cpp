@@ -6,7 +6,7 @@
 MenuStruct *constructMenuStruct() {
     MenuStruct *menuStruct = (MenuStruct *) malloc(sizeof(MenuStruct));
     menuStruct->state = IDLE_STATE;
-    menuStruct->timeStruct = constructTimeStruct(0, 0);
+    menuStruct->timeStruct = constructTimeComponent(0, 0, 0);
     menuStruct->handleButtons = handleButtons;
     menuStruct->handleIdleState = handleIdleState;
     menuStruct->handleTimeState = handleTimeState;
@@ -20,27 +20,37 @@ MenuStruct *constructMenuStruct() {
     return menuStruct;
 }
 
-void handleButtons(MenuStruct *self, int *buttonValues) {
+states_t handleButtons(MenuStruct *self, int *buttonValues) {
     switch (self->state) {
         case IDLE_STATE:
-            handleIdleState(self, buttonValues);
+            self->handleIdleState(self, buttonValues);
             break;
         case TIME_STATE:
-            handleTimeState(self, buttonValues);
+            self->handleTimeState(self, buttonValues);
             break;
         case TIME_HOURS_STATE:
+            self->handleTimeHoursState(self, buttonValues);
             break;
         case TIME_MINUTES_STATE:
+            self->handleTimeMinutesState(self, buttonValues);
             break;
         case ALARM_STATE:
+            self->handleAlarmState(self, buttonValues);
             break;
         case ALARM_HOURS_STATE:
+            self->handleAlarmHoursState(self, buttonValues);
             break;
         case ALARM_MINUTES_STATE:
+            self->handleAlarmMinutesState(self, buttonValues);
+            break;
+        case ALARM_SETTING_STATE:
+            self->handleAlarmSettingState(self, buttonValues);
             break;
         case FREQUENCY_STATE:
+            self->handleFrequencyState(self, buttonValues);
             break;
     }
+    return self->state;
 }
 
 void handleIdleState(MenuStruct *self, int *buttonValues) {
