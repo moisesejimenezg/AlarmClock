@@ -19,6 +19,7 @@ const int NUMBER_OF_BUTTONS = 4;
 // INPUT OUTPUT VARIABLES
 int buttonValues[NUMBER_OF_BUTTONS];
 int oldButtonValues[NUMBER_OF_BUTTONS];
+
 // HARDWARE
 SoftwareSerial softwareSerial0(0, 1);
 
