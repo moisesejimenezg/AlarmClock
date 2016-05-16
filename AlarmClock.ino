@@ -1,8 +1,12 @@
-// Libraries
+// LIBRARIES
+// ARDUINO
 #include <LiquidCrystal.h>
+#include <SoftwareSerial.h>
+
+// C
 #include <string.h>
 
-// classes
+// CLASSES
 #include "classes/Menu.h"
 
 // INPUT OUTPUT CONSTANTS
@@ -15,6 +19,8 @@ const int NUMBER_OF_BUTTONS = 4;
 // INPUT OUTPUT VARIABLES
 int buttonValues[NUMBER_OF_BUTTONS];
 int oldButtonValues[NUMBER_OF_BUTTONS];
+// HARDWARE
+SoftwareSerial softwareSerial0(0, 1);
 
 // LOGIC
 MenuStruct *menuStruct;
@@ -27,6 +33,7 @@ void setup() {
     pinMode(LESS_BUTTON_PIN, INPUT);
     pinMode(MORE_BUTTON_PIN, INPUT);
     pinMode(EXIT_BUTTON_PIN, INPUT);
+    softwareSerial0.begin(9600);
 
     // LOGIC INITS
     menuStruct = constructMenuStruct();
@@ -35,7 +42,9 @@ void setup() {
 void loop() {
     bool buttonStateChanged = readButtons();
     if (buttonStateChanged) {
-        menuStruct->handleButtons(menuStruct, buttonValues);
+        states_t newState = menuStruct->handleButtons(menuStruct, buttonValues);
+        softwareSerial0.print("Enter state: ");
+        softwareSerial0.println(newState);
     }
 }
 
