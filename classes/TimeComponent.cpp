@@ -4,7 +4,7 @@
 
 #include "TimeComponent.h"
 
-TimeStruct *constructTimeStruct(int day, int hour, int minute) {
+TimeStruct *constructTimeComponent(int day, int hour, int minute) {
     TimeStruct *timeStruct = (TimeStruct *) malloc(sizeof(TimeStruct));
     *timeStruct->day = day;
     *timeStruct->hour = hour;
@@ -18,17 +18,17 @@ TimeStruct *constructTimeStruct(int day, int hour, int minute) {
 }
 
 void increaseHour(TimeStruct *self) {
-    self->hour = (self->hour + 1) % 24;
+    *self->hour = (*self->hour + 1) % 24;
 }
 
 void decreaseHour(TimeStruct *self) {
-    self->hour = (self->hour - 1) % 24;
+    *self->hour = (*self->hour - 1) % 24;
 }
 
 void increaseMinute(TimeStruct *self) {
-    self->minute = (self->minute + 1) % 60;
+    *self->minute = (*self->minute + 1) % 60;
 }
 
 void decreaseMinute(TimeStruct *self) {
-    self->minute = (self->minute - 1) % 60;
+    *self->minute = (*self->minute - 1) % 60;
 }

@@ -18,7 +18,7 @@ typedef struct TimeStruct {
     void (*decreaseMinute)(TimeStruct *);
 } TimeStruct;
 
-TimeStruct *constructTimeStruct(int hour, int minute);
+TimeStruct *constructTimeComponent(int day, int hour, int minute) ;
 
 void increaseHour(TimeStruct *self);
 
