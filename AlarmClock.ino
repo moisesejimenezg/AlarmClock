@@ -1,40 +1,56 @@
 // Libraries
 #include <LiquidCrystal.h>
+#include <string.h>
 
 // classes
 #include "classes/Menu.h"
 
-// TIME VARIABLES
-const int enterButton = 22;
-const int lessButton = 23;
-const int moreButton = 24;
-const int exitButton = 25;
-int buttonValues[4];
+// INPUT OUTPUT CONSTANTS
+const int MENU_BUTTON_PIN = 22;
+const int LESS_BUTTON_PIN = 23;
+const int MORE_BUTTON_PIN = 24;
+const int EXIT_BUTTON_PIN = 25;
+const int NUMBER_OF_BUTTONS = 4;
+
+// INPUT OUTPUT VARIABLES
+int buttonValues[NUMBER_OF_BUTTONS];
+int oldButtonValues[NUMBER_OF_BUTTONS];
 
 // LOGIC
 MenuStruct *menuStruct;
 
-void readButtons();
+bool readButtons();
 
 void setup() {
     // HARDWARE INITS
-    pinMode(enterButton, INPUT);
-    pinMode(lessButton, INPUT);
-    pinMode(moreButton, INPUT);
-    pinMode(exitButton, INPUT);
+    pinMode(MENU_BUTTON_PIN, INPUT);
+    pinMode(LESS_BUTTON_PIN, INPUT);
+    pinMode(MORE_BUTTON_PIN, INPUT);
+    pinMode(EXIT_BUTTON_PIN, INPUT);
 
     // LOGIC INITS
     menuStruct = constructMenuStruct();
 }
 
 void loop() {
-    readButtons();
-    menuStruct->handleButtons(menuStruct, buttonValues);
+    bool buttonStateChanged = readButtons();
+    if (buttonStateChanged) {
+        menuStruct->handleButtons(menuStruct, buttonValues);
+    }
 }
 
-void readButtons() {
-    buttonValues[MENU_BUTTON] = digitalRead(enterButton);
-    buttonValues[LESS_BUTTON] = digitalRead(lessButton);
-    buttonValues[MORE_BUTTON] = digitalRead(moreButton);
-    buttonValues[EXIT_BUTTON] = digitalRead(exitButton);
+bool readButtons() {
+    memcpy(oldButtonValues, buttonValues, NUMBER_OF_BUTTONS * sizeof(int));
+    bool buttonStateChanged = false;
+    buttonValues[MENU_BUTTON] = digitalRead(MENU_BUTTON_PIN);
+    buttonValues[LESS_BUTTON] = digitalRead(LESS_BUTTON_PIN);
+    buttonValues[MORE_BUTTON] = digitalRead(MORE_BUTTON_PIN);
+    buttonValues[EXIT_BUTTON] = digitalRead(EXIT_BUTTON_PIN);
+    for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
+        if (buttonValues[i] != oldButtonValues[i]) {
+            buttonStateChanged = true;
+            break;
+        }
+    }
+    return buttonStateChanged;
 }
