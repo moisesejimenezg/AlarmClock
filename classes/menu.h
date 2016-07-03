@@ -12,7 +12,7 @@
 #define MORE_BUTTON 2
 #define EXIT_BUTTON 3
 
-typedef enum states_t {
+typedef enum State {
     IDLE_STATE,
     TIME_STATE,
     TIME_HOURS_STATE,
@@ -22,14 +22,14 @@ typedef enum states_t {
     ALARM_MINUTES_STATE,
     ALARM_SETTING_STATE,
     FREQUENCY_STATE
-} states_t;
+} State;
 
 typedef struct MenuStruct {
     TimeStruct *timeStruct;
 
-    states_t state;
+    State state;
 
-    states_t (*handleButtons)(MenuStruct *self, int *buttonValues);
+    State (*handleButtons)(MenuStruct *self, int *buttonValues);
 
     void (*handleIdleState)(MenuStruct *self, int *buttonValues);
 
@@ -52,7 +52,7 @@ typedef struct MenuStruct {
 
 MenuStruct *constructMenuStruct();
 
-states_t handleButtons(MenuStruct *self, int *buttonValues);
+State handleButtons(MenuStruct *self, int *buttonValues);
 
 void handleIdleState(MenuStruct *self, int *buttonValues);
 
@@ -71,5 +71,7 @@ void handleAlarmMinutesState(MenuStruct *self, int *buttonValues);
 void handleAlarmSettingState(MenuStruct *self, int *buttonValues);
 
 void handleFrequencyState(MenuStruct *self, int *buttonValues);
+
+size_t getStringValue(State state, char *stringValue);
 
 #endif //ALARMCLOCK_MENU_H

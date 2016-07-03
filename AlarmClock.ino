@@ -28,6 +28,8 @@ MenuStruct *menuStruct;
 
 bool readButtons();
 
+void serialPrintArrayOfChar(char *String, size_t size);
+
 void setup() {
     // HARDWARE INITS
     pinMode(MENU_BUTTON_PIN, INPUT);
@@ -43,9 +45,12 @@ void setup() {
 void loop() {
     bool buttonStateChanged = readButtons();
     if (buttonStateChanged) {
-        states_t newState = menuStruct->handleButtons(menuStruct, buttonValues);
-        softwareSerial0.print("Enter state: ");
-        softwareSerial0.println(newState);
+        State newState = menuStruct->handleButtons(menuStruct, buttonValues);
+        char *nameOfState = (char *) malloc(25 * sizeof(char));
+        size_t sizeOfName = getStringValue(newState, nameOfState);
+        softwareSerial0.println();
+        softwareSerial0.print("Enter ");
+        serialPrintArrayOfChar(nameOfState, sizeOfName);
     }
 }
 
@@ -57,10 +62,17 @@ bool readButtons() {
     buttonValues[MORE_BUTTON] = digitalRead(MORE_BUTTON_PIN);
     buttonValues[EXIT_BUTTON] = digitalRead(EXIT_BUTTON_PIN);
     for (int i = 0; i < NUMBER_OF_BUTTONS; i++) {
-        if (buttonValues[i] != oldButtonValues[i]) {
+        if (buttonValues[i] != oldButtonValues[i] && !oldButtonValues[i]) {
             buttonStateChanged = true;
             break;
         }
     }
     return buttonStateChanged;
+}
+
+void serialPrintArrayOfChar(char *String, size_t size) {
+    for (int i = 1; i <= size; i++) {
+        softwareSerial0.print(String[i]);
+    }
+    free(String);
 }

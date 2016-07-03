@@ -20,7 +20,7 @@ MenuStruct *constructMenuStruct() {
     return menuStruct;
 }
 
-states_t handleButtons(MenuStruct *self, int *buttonValues) {
+State handleButtons(MenuStruct *self, int *buttonValues) {
     switch (self->state) {
         case IDLE_STATE:
             self->handleIdleState(self, buttonValues);
@@ -151,4 +151,52 @@ void handleFrequencyState(MenuStruct *self, int *buttonValues) {
     } else if (buttonValues[MORE_BUTTON]) {
         self->state = TIME_STATE;
     }
+}
+
+size_t getStringValue(State state, char *stringValue) {
+    size_t size;
+    char *stringConstant;
+    switch (state) {
+        case IDLE_STATE:
+            stringConstant = "IDLE_STATE";
+            size = sizeof("IDLE_STATE");
+            break;
+        case TIME_STATE:
+            stringConstant = "TIME_STATE";
+            size = sizeof("TIME_STATE");
+            break;
+        case TIME_HOURS_STATE:
+            stringConstant = "TIME_HOURS_STATE";
+            size = sizeof("TIME_HOURS_STATE");
+            break;
+        case TIME_MINUTES_STATE:
+            stringConstant = "TIME_MINUTES_STATE";
+            size = sizeof("TIME_MINUTES_STATE");
+            break;
+        case ALARM_STATE:
+            stringConstant = "ALARM_STATE";
+            size = sizeof("ALARM_STATE");
+            break;
+        case ALARM_HOURS_STATE:
+            stringConstant = "ALARM_HOURS_STATE";
+            size = sizeof("ALARM_HOURS_STATE");
+            break;
+        case ALARM_MINUTES_STATE:
+            stringConstant = "ALARM_MINUTES_STATE";
+            size = sizeof("ALARM_MINUTES_STATE");
+            break;
+        case ALARM_SETTING_STATE:
+            stringConstant = "ALARM_SETTING_STATE";
+            size = sizeof("ALARM_SETTING_STATE");
+            break;
+        case FREQUENCY_STATE:
+            stringConstant = "FREQUENCY_STATE";
+            size = sizeof("FREQUENCY_STATE");
+            break;
+    }
+    for (int i = 1; i <= size; i++) {
+        stringValue[i] = stringConstant[i - 1];
+    }
+    stringValue[size + 1] = '\0';
+    return size;
 }
